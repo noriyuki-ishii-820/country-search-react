@@ -1,8 +1,11 @@
 import React from 'react';
-
+import styles from "./CountrySearch.module.css";
 
 export default function Country (){
     return (
-        <h1> this will be the country page</h1>
+        <div className={styles.container}>
+            This is the country page
+        </div>
+       
     )
 }

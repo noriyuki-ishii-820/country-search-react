@@ -1,0 +1,9 @@
+.container {
+  background-image: url("../../img/background.jpg");
+  height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
