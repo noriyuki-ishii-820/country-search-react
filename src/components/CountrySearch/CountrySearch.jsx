@@ -85,20 +85,42 @@ export default function Country (){
                             <div className={classes.paper}>
                                     
                                 <h2>{country.name}</h2>
+                                <img src={country.flag} alt="flag" className={styles.flag}/>
                                 <h4>Basic information</h4>
                                 <ul>
+                                    <li>Abbreviation(CIOC): {country.cioc}</li>
+                                    <li>Region: {country.region}</li>
                                     <li>Capital City: {country.capital}</li>
-                                    <li>Population: {parseInt(country.population).toLocaleString()}</li>
-                                    <li>Area (km2): {parseInt(country.area).toLocaleString()}</li>
+                                    <li>Population: {parseInt(country.population).toLocaleString()} people</li>
+                                    <li>Area: {parseInt(country.area).toLocaleString()} km2</li>
                                     <li>Currency: {country.currencies && 
                                         <span>
                                             {country.currencies[0].name} ({country.currencies[0].symbol})
                                         </span>
                                     }</li>
-                            
+                                    <li>{country.languages && country.languages.length === 1 ?
+                                                
+                                                <>
+                                                <span>
+                                                Language:  
+                                                     {country.languages[0].name}
+                                                </span>
+                                                </>
+                                            :
+                                           
+                                                <>
+                                                <span>
+                                                Languages: 
+                                                    <ul>
+                                                    {country.languages && country.languages.map((language) =>
+                                                        <li>{language.name}</li>
+                                                )}      
+                                                    </ul>
+                                                </span>
+                                                </>
+                                        }
+                                   </li>
                                 </ul>
-                                
-                           
                             </div>
                         </Fade>
                     </Modal>
