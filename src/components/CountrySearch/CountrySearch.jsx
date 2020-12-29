@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles(theme => ({
     modal: {
@@ -14,14 +15,15 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor:  'rgba(252, 252, 252, 0.9)',
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
+        height:"60vh",
+        width:"60vw",
     },
 }));
 
-let data = "[]"
 export default function Country (){
     const [country, setCountry] = useState([]);
 
@@ -29,10 +31,6 @@ export default function Country (){
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-
-    const handleOpen = () => {
-        setOpen(true);
-    };
 
     const handleClose = () => {
         setOpen(false);
@@ -62,6 +60,7 @@ export default function Country (){
     }
 
     return (
+        
         <div className={styles.container}>
             <div className={styles.searchBox}>
                 <form onSubmit={getSearch} className={styles.searchForm}>
@@ -84,10 +83,22 @@ export default function Country (){
                     >
                         <Fade in={open}>
                             <div className={classes.paper}>
+                                    
                                 <h2>{country.name}</h2>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi accumsan odio enim.
-                                </p>
+                                <h4>Basic information</h4>
+                                <ul>
+                                    <li>Capital City: {country.capital}</li>
+                                    <li>Population: {parseInt(country.population).toLocaleString()}</li>
+                                    <li>Area (km2): {parseInt(country.area).toLocaleString()}</li>
+                                    <li>Currency: {country.currencies && 
+                                        <span>
+                                            {country.currencies[0].name} ({country.currencies[0].symbol})
+                                        </span>
+                                    }</li>
+                            
+                                </ul>
+                                
+                           
                             </div>
                         </Fade>
                     </Modal>
