@@ -146,6 +146,7 @@ export default function Country() {
                 {country.latlng &&
                 <LoadScript googleMapsApiKey="AIzaSyATOwfejjQyq5E8XtLSZ63fyEb_eNu-KJc">
                   <GoogleMap
+                    language="en"
                     mapContainerStyle={containerStyle}
                     center={{lat: country.latlng[0], lng: country.latlng[1]}}
                     zoom={4}
