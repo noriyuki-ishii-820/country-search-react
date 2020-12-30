@@ -37,7 +37,11 @@
 
 .flag {
     width: 20vw;
-    margin:auto;
+    margin:auto auto 20px auto;
     display:block;
     border:1px black solid;
+}
+
+.map {
+    border:2px black solid;
 }

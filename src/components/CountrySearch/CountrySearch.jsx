@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
+import Grid from '@material-ui/core/Grid';
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 
 const useStyles = makeStyles((theme) => ({
@@ -13,14 +14,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    width: "80%",
+    margin: "auto",
   },
   paper: {
     backgroundColor: "rgba(252, 252, 252, 0.9)",
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    height: "60vh",
-    width: "60vw",
+    flexGrow: 1,
   },
 }));
 
@@ -64,12 +66,10 @@ export default function Country() {
 
     const containerStyle = {
         width: '400px',
-        height: '400px'
+        height: '400px',
+        margin: 'auto',
       };
       
-    
-      
-
   return (
     <div className={styles.container}>
       <div className={styles.searchBox}>
@@ -98,62 +98,70 @@ export default function Country() {
             }}
           >
             <Fade in={open}>
-              <div className={classes.paper}>
+                <div className={classes.paper}>
                 <h2>{country.name}</h2>
                 <img src={country.flag} alt="flag" className={styles.flag} />
-                <h4>Basic information</h4>
-                <ul>
-                  <li>Abbreviation(CIOC): {country.cioc}</li>
-                  <li>Region: {country.region}</li>
-                  <li>Capital City: {country.capital}</li>
-                  <li>
-                    Population: {parseInt(country.population).toLocaleString()}{" "}
-                    people
-                  </li>
-                  <li>Area: {parseInt(country.area).toLocaleString()} km2</li>
-                  <li>
-                    Currency:{" "}
-                    {country.currencies && (
-                      <span>
-                        {country.currencies[0].name} (
-                        {country.currencies[0].symbol})
-                      </span>
-                    )}
-                  </li>
-                  <li>
-                    {country.languages && country.languages.length === 1 ? (
-                      <>
-                        <span>
-                          Language:
-                          {country.languages[0].name}
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <span>
-                          Languages:
-                          <ul>
-                            {country.languages &&
-                              country.languages.map((language) => (
-                                <li>{language.name}</li>
-                              ))}
-                          </ul>
-                        </span>
-                      </>
-                    )}
-                  </li>
-                </ul>
-                {country.latlng &&
-                <LoadScript googleMapsApiKey="AIzaSyATOwfejjQyq5E8XtLSZ63fyEb_eNu-KJc">
-                  <GoogleMap
-                    language="en"
-                    mapContainerStyle={containerStyle}
-                    center={{lat: country.latlng[0], lng: country.latlng[1]}}
-                    zoom={4}
-                  >
-                  </GoogleMap>
-                </LoadScript>}
-              </div>
+                  <Grid container spacing={3}>
+                      <Grid item xs={12} md={6}>
+                        <h4>Basic information</h4>
+                        <ul>
+                          <li>Abbreviation(CIOC): {country.cioc}</li>
+                          <li>Region: {country.region}</li>
+                          <li>Capital City: {country.capital}</li>
+                          <li>
+                            Population: {parseInt(country.population).toLocaleString()}{" "}
+                            people
+                          </li>
+                          <li>Area: {parseInt(country.area).toLocaleString()} km2</li>
+                          <li>
+                            Currency:{" "}
+                            {country.currencies && (
+                              <span>
+                                {country.currencies[0].name} (
+                                {country.currencies[0].symbol})
+                              </span>
+                            )}
+                          </li>
+                          <li>
+                            {country.languages && country.languages.length === 1 ? (
+                              <>
+                                <span>
+                                  Language:
+                                  {country.languages[0].name}
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <span>
+                                  Languages:
+                                  <ul>
+                                    {country.languages &&
+                                      country.languages.map((language) => (
+                                        <li>{language.name}</li>
+                                      ))}
+                                  </ul>
+                                </span>
+                              </>
+                            )}
+                          </li>
+                        </ul>
+                      </Grid>
+                      <Grid item xs={12} md={6}>
+                        {country.latlng &&
+                        <LoadScript googleMapsApiKey="AIzaSyATOwfejjQyq5E8XtLSZ63fyEb_eNu-KJc">
+                          <GoogleMap
+                            language="en"
+                            mapContainerStyle={containerStyle}
+                            center={{lat: country.latlng[0], lng: country.latlng[1]}}
+                            zoom={4}
+                            
+                          >
+                          </GoogleMap>
+                        </LoadScript>}
+                      </Grid>
+                  </Grid>
+                </div>
+             
             </Fade>
           </Modal>
         </form>
