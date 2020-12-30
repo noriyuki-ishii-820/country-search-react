@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./CountrySearch.module.css";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,23 +28,36 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Country() {
   const [country, setCountry] = useState([]);
+  
 
-    console.log(country)
+ 
+
   // modal
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-
   const handleClose = () => {
     setOpen(false);
   };
 
-  // search engine
+  // function when the fetch fails 
+  function handleErrors(response) {
+    if (!response.ok) throw new Error(response.status);
+    return response;
+}
 
+  // search engine
   const getResults = async (queryURL) => {
-    const response = await fetch(queryURL);
+    const response = await fetch(queryURL)
+      .then(handleErrors)
+      .catch(function(err){
+        console.log(err)
+        alert("Invalid search result. please try again")
+        window.location.reload()
+      });
+
     const data = await response.json();
     setCountry(data[0]);
+    setOpen(true);
   };
 
   const getSearch = (e) => {
@@ -58,17 +71,16 @@ export default function Country() {
 
     const queryURL = "https://restcountries.eu/rest/v2/name/" + input;
     getResults(queryURL);
-    setOpen(true);
+
 
   };
 
-    // google maps
-
-    const containerStyle = {
-        width: '400px',
-        height: '400px',
-        margin: 'auto',
-      };
+  // google maps
+  const containerStyle = {
+      width: '400px',
+      height: '400px',
+      margin: 'auto',
+    };
       
   return (
     <div className={styles.container}>
@@ -160,6 +172,7 @@ export default function Country() {
                         </LoadScript>}
                       </Grid>
                   </Grid>
+                  <Button variant="contained" onClick={handleClose}>Close</Button>
                 </div>
              
             </Fade>
