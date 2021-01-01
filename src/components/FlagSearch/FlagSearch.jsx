@@ -17,6 +17,7 @@ export const Flag = () => {
   const colorDB = data.map((flag) => (
 
     <Palette
+      label= {flag.name}
       src={flag.flag}
       crossOrigin="anonymous"
       format="hex"
@@ -24,7 +25,7 @@ export const Flag = () => {
     >
       {({ data, loading }) => {
         if (loading) return <Loading />;
-        return console.log(data)
+        return console.log([{name:flag.name, color: data}])
 
         //   return (
         //     <div>
