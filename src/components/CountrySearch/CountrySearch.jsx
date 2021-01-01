@@ -28,9 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Country() {
   const [country, setCountry] = useState([]);
-  
-
- 
 
   // modal
   const classes = useStyles();
