@@ -1,0 +1,27 @@
+.container {
+    background-image: url("../../img/background.jpg");
+    height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display:flex;
+    align-items:center;
+    justify-content: center;
+  }
+  
+  .searchBox {
+    text-align:center;
+      width: 70%;
+      margin:auto;
+      background:rgba(255,255,255,0.9);
+      border-radius:20px;
+}
+
+
+.list {
+    display:inline;
+    list-style: none;
+}
+

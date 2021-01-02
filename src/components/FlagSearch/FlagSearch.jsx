@@ -1,12 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { usePalette } from "react-palette";
 import { fetchData } from "../../api";
-import Color, { Palette } from "color-thief-react";
+import TextField from "@material-ui/core/TextField";
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Button from "@material-ui/core/Button";
+import Checkbox from '@material-ui/core/Checkbox';
+import { Palette } from "color-thief-react";
+import styles from "./FlagSearch.module.css";
+
 
 export const Flag = () => {
   const [data, setData] = useState([]);
+  const [state, setState] = React.useState([]);
   const Loading = () => <div>Loading...</div>;
+  const colors = ["Red","White","Blue","Yellow","Green","Black"]
 
+  // checkboxes 
+  
+
+  const handleChange = (event) => {
+    setState({ ...state, color: event.target.name});
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(state)
+  }
+
+
+  // runs upon load
   useEffect(() => {
     const fetchAPI = async () => {
       setData(await fetchData());
@@ -14,6 +36,7 @@ export const Flag = () => {
     fetchAPI();
   }, []);
 
+  // search colors (hex) of flags
   const colorDB = data.map((flag) => (
 
     <Palette
@@ -27,24 +50,40 @@ export const Flag = () => {
         if (loading) return <Loading />;
         return console.log([{name:flag.name, color: data}])
 
-        //   return (
-        //     <div>
-        //       Palette:
-        //       <ul>
-        //         {data.map((color, index) => (
-        //           <li key={index} style={{ color: color }}>
-        //             <strong>{color}</strong>
-        //           </li>
-        //         ))}
-        //       </ul>
-        //     </div>
-        //   );
+   
       }}
     </Palette>
   ));
+
+  const colorBtn = colors.map((color, index)=> {
+      return (
+      <FormControlLabel
+        key={index}
+        control={<Checkbox 
+        onChange={handleChange} 
+        name={color} />}
+        label={color}
+      />
+  )})
+
   return (
     <div>
-        {colorDB}
+        <div className={styles.container}>
+          <div className={styles.searchBox}>
+            <h4>Search by Colors</h4>
+
+            <form onSubmit={submit}>
+              <FormGroup>
+                <ul className={styles.list}>
+                  {colorBtn}
+                </ul>
+              </FormGroup>
+              <Button variant="contained" color="primary" type="submit">
+                Search
+              </Button>
+            </form>            
+        </div>
+      </div>
     </div>
   );
 };
