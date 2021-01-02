@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { fetchData } from "../../api";
-import TextField from "@material-ui/core/TextField";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from "@material-ui/core/Button";
 import Checkbox from '@material-ui/core/Checkbox';
 import { Palette } from "color-thief-react";
 import styles from "./FlagSearch.module.css";
-
-
 
 export const Flag = () => {
   const [data, setData] = useState([]);
@@ -21,12 +18,9 @@ export const Flag = () => {
     Black: false,
   });
   const Loading = () => <div>Loading...</div>;
-  const colors = ["Red","White","Blue","Yellow","Green","Black"]
-
+  const colors = ["Red","Yellow","Green","Cyan","Blue","Pink","Orange","Yellow Green"]
 
   // checkboxes 
-  
-
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
@@ -36,35 +30,15 @@ export const Flag = () => {
     console.log(state)
   }
 
-
   // runs upon load
   useEffect(() => {
     const fetchAPI = async () => {
       setData(await fetchData());
-      colorCoding();
     };
     fetchAPI();
   }, []);
 
-  // search colors (hex) of flags
-  const colorDB = data.map((flag) => (
-
-    <Palette
-      label= {flag.name}
-      src={flag.flag}
-      crossOrigin="anonymous"
-      format="hex"
-      colorCount={4}
-    >
-      {({ data, loading }) => {
-        if (loading) return <Loading />;
-        return console.log([{name:flag.name, color: data}])
-
-   
-      }}
-    </Palette>
-  ));
-
+// create the color btns
   const colorBtn = colors.map((color, index)=> {
       return (
       <FormControlLabel
@@ -77,10 +51,11 @@ export const Flag = () => {
       />
   )})
 
-　const colorCoding = () => {
+ // color grouping 
+　const colorCoding = (value) => {
         let ratio;
         let color;
-        let hex = "#b32434"
+        let hex = value
         if(hex==='#'){return;}
         var r = parseInt(hex.substring(1,3),16),
         g = parseInt(hex.substring(3,5),16),
@@ -213,12 +188,26 @@ export const Flag = () => {
         return console.log("this is color is " + iro)
 }
   
-  
-  
+return (
 
-  return (
-  
     <div>
+      {data.map((flag) => (
+        <Palette
+          label= {flag.name}
+          src={flag.flag}
+          crossOrigin="anonymous"
+          format="hex"
+          colorCount={4}
+        >
+          {({ data }) => {
+            let colors = ({name:flag.name, color: data})
+            {colors && colors.color.map((each)=> {
+              colorCoding(each) 
+            })}
+          }}
+        
+        </Palette>  
+      ))}
         <div className={styles.container}>
           <div className={styles.searchBox}>
             <h4>Search by Colors</h4>
@@ -238,5 +227,6 @@ export const Flag = () => {
     </div>
   );
 };
+
 
 export default Flag;
