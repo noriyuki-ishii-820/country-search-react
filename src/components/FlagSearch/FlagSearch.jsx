@@ -11,7 +11,14 @@ import styles from "./FlagSearch.module.css";
 
 export const Flag = () => {
   const [data, setData] = useState([]);
-  const [state, setState] = React.useState([]);
+  const [state, setState] = React.useState({
+    Red : false,
+    White: false,
+    Blue: false,
+    Yellow: false,
+    Green: false,
+    Black: false,
+  });
   const Loading = () => <div>Loading...</div>;
   const colors = ["Red","White","Blue","Yellow","Green","Black"]
 
@@ -19,7 +26,7 @@ export const Flag = () => {
   
 
   const handleChange = (event) => {
-    setState({ ...state, color: event.target.name});
+    setState({ ...state, [event.target.name]: event.target.checked });
   };
 
   const submit = (e) => {
@@ -59,8 +66,9 @@ export const Flag = () => {
       return (
       <FormControlLabel
         key={index}
-        control={<Checkbox 
-        onChange={handleChange} 
+        control={<Checkbox
+        checked={state.checked} 
+        onClick={handleChange} 
         name={color} />}
         label={color}
       />
