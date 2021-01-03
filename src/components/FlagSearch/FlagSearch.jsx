@@ -17,7 +17,6 @@ export const Flag = () => {
     Green: false,
     Black: false,
   });
-  const Loading = () => <div>Loading...</div>;
   const colors = ["Red","Yellow","Green","Cyan","Blue","Pink","Orange","Yellow Green"]
 
   // checkboxes 
@@ -52,10 +51,10 @@ export const Flag = () => {
   )})
 
  // color grouping 
-　const colorCoding = (value) => {
+　const colorCoding = (hex) => {
         let ratio;
         let color;
-        let hex = value
+      
         if(hex==='#'){return;}
         var r = parseInt(hex.substring(1,3),16),
         g = parseInt(hex.substring(3,5),16),
@@ -200,18 +199,21 @@ return (
           colorCount={4}
         >
           {({ data }) => {
-            let colors = ({name:flag.name, color: data})
-            {colors && colors.color.map((each)=> {
-              colorCoding(each) 
-            })}
-          }}
+          data && data.map((x) => {
+              colorCoding(x);
+              
+            })
+
+  
+            }
+          }
         
         </Palette>  
       ))}
         <div className={styles.container}>
           <div className={styles.searchBox}>
             <h4>Search by Colors</h4>
-
+            
             <form onSubmit={submit}>
               <FormGroup>
                 <ul className={styles.list}>
@@ -223,6 +225,9 @@ return (
               </Button>
             </form>            
         </div>
+        <ul>
+      
+        </ul>
       </div>
     </div>
   );
