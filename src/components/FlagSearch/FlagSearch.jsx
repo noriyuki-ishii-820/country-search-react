@@ -8,6 +8,7 @@ import { Palette } from "color-thief-react";
 import styles from "./FlagSearch.module.css";
 
 export const Flag = () => {
+  let iro = "";
   const [data, setData] = useState([]);
   const [state, setState] = React.useState({
     Red : false,
@@ -17,16 +18,40 @@ export const Flag = () => {
     Green: false,
     Black: false,
   });
-  const colors = ["Red","Yellow","Green","Cyan","Blue","Pink","Orange","Yellow Green"]
+  const colors = ["Red","Yellow","Green","Blue","Pink","Orange"]
 
   // checkboxes 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+   setState({ ...state, [event.target.name]: event.target.checked});
+    
   };
 
   const submit = (e) => {
     e.preventDefault();
     console.log(state)
+
+    let trueArray = [];
+    if (state.Red === true){
+        trueArray.push("Red")
+    }
+    if (state.Yellow === true){
+      trueArray.push("Yellow")
+    }
+    if (state.Green === true){
+      trueArray.push("Green")
+    }
+    if (state.Pink === true){
+      trueArray.push("Pink")
+    }
+    if (state.Orange === true){
+      trueArray.push("Orange")
+    }
+    if (state.Blue === true){
+      trueArray.push("Blue")
+    }
+   
+    console.log(trueArray)
+    
   }
 
   // runs upon load
@@ -76,7 +101,7 @@ export const Flag = () => {
         // 7-0
         }else if(g===b && g>r){
           color = '#00ffff';
-          iro = 'Cyan';
+          iro = 'Blue';
         // 9-0
         }else if(r===g && b>r){
           color = '#0000ff';
@@ -110,7 +135,7 @@ export const Flag = () => {
           // 4-1,4-2 R:12.5 ~ 4.6
           else if(r/g*16 > 4.5 && r/g*16 <= 12.5){
             color = '#7fff00';
-            iro = 'Yellow Green';
+            iro = 'Yellow';
           }
           // 5-1 R:4.5 ~ 0
           else if(r/g*16 > 0 && r/g*16 <= 4.5){
@@ -184,13 +209,13 @@ export const Flag = () => {
         }else{
             iro = 'invalid';
         }
-        return console.log("this is color is " + iro)
+        return iro
 }
   
 return (
 
     <div>
-      {data.map((flag) => (
+      {/* {data.map((flag) => (
         <Palette
           label= {flag.name}
           src={flag.flag}
@@ -201,15 +226,11 @@ return (
           {({ data }) => {
           data && data.map((x) => {
               colorCoding(x);
-              
-            })
-
-  
-            }
+            })}
           }
         
         </Palette>  
-      ))}
+      ))} */}
         <div className={styles.container}>
           <div className={styles.searchBox}>
             <h4>Search by Colors</h4>
