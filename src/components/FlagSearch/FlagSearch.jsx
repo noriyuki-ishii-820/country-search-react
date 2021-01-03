@@ -7,8 +7,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Palette } from "color-thief-react";
 import styles from "./FlagSearch.module.css";
 
+let iro = "";
+let trueArray = [];
+let colorCountryArr = [];
+
 export const Flag = () => {
-  let iro = "";
+  
   const [data, setData] = useState([]);
   const [state, setState] = React.useState({
     Red : false,
@@ -30,7 +34,6 @@ export const Flag = () => {
     e.preventDefault();
     console.log(state)
 
-    let trueArray = [];
     if (state.Red === true){
         trueArray.push("Red")
     }
@@ -49,9 +52,12 @@ export const Flag = () => {
     if (state.Blue === true){
       trueArray.push("Blue")
     }
+
+    colorCountryArr && trueArray && trueArray.map((e,i) => {
+      const result = colorCountryArr.filter(({color}) => color  === e)  
+      console.log(i, result)
+    })
    
-    console.log(trueArray)
-    
   }
 
   // runs upon load
@@ -83,7 +89,7 @@ export const Flag = () => {
         if(hex==='#'){return;}
         var r = parseInt(hex.substring(1,3),16),
         g = parseInt(hex.substring(3,5),16),
-        b = parseInt(hex.substring(5,7),16),
+        b = parseInt(hex.substring(5,7),16);
         iro = color = ratio = "";
 
         // 1-0
@@ -140,7 +146,7 @@ export const Flag = () => {
           // 5-1 R:4.5 ~ 0
           else if(r/g*16 > 0 && r/g*16 <= 4.5){
             color = '#7fff00';
-            iro = 'Yellow Green';
+            iro = 'Green';
           }
         }else if(g>b && b>r){
           // 5-2 B:0 ~ 4.5
@@ -151,23 +157,23 @@ export const Flag = () => {
           // 6-1,6-2 B:4.6 ~ 12.5
           else if(b/g*16 > 4.5 && b/g*16 <= 12.5){
             color = '#00ff7f';
-            iro = 'Blue Green';
+            iro = 'Green';
           }
           // 7-1 B:12.6 ~ 16
           else if(b/g*16 > 12.5 && b/g*16 <= 16){
             color = '#00ffff';
-            iro = 'Cyan';
+            iro = 'Blue';
           }
         }else if(b>g && g>r){
           // 7-2 G:16 ~ 12.6
           if(g/b*16 > 12.5 && g/b*16 <= 16){
             color = '#00ffff';
-            iro = 'Cyan';
+            iro = 'Blue';
           }
           // 8-1,8-2 G:12.5 ~ 4.6
           else if(g/b*16 > 4.5 && g/b*16 <= 12.5){
             color = '#007fff';
-            iro = 'Sky Blue';
+            iro = 'Blue';
           }
           // 9-1 B:4.5 ~ 0
           else if(g/b*16 > 0 && g/b*16 <= 4.5){
@@ -209,14 +215,15 @@ export const Flag = () => {
         }else{
             iro = 'invalid';
         }
-        return iro
+       return iro
 }
-  
+
 return (
 
     <div>
-      {/* {data.map((flag) => (
+      {data.map((flag, i) => (
         <Palette
+          key={i}
           label= {flag.name}
           src={flag.flag}
           crossOrigin="anonymous"
@@ -226,11 +233,15 @@ return (
           {({ data }) => {
           data && data.map((x) => {
               colorCoding(x);
-            })}
-          }
+              let colorCountry = ({name:flag.name, color:iro})
+              colorCountryArr.push(colorCountry)
+              return colorCountryArr
+            })
+          }}
+        
         
         </Palette>  
-      ))} */}
+      ))}
         <div className={styles.container}>
           <div className={styles.searchBox}>
             <h4>Search by Colors</h4>
