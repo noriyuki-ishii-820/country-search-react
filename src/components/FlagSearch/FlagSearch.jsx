@@ -12,7 +12,6 @@ let trueArray = [];
 let colorCountryArr = [];
 
 export const Flag = () => {
-  
   const [data, setData] = useState([]);
   const [state, setState] = React.useState({
     Red : false,
@@ -22,7 +21,7 @@ export const Flag = () => {
     Green: false,
     Black: false,
   });
-  const colors = ["Red","Yellow","Green","Blue","Pink","Orange"]
+  const colors = ["Red","Yellow","Green","Blue","Orange"]
 
   // checkboxes 
   const handleChange = (event) => {
@@ -43,22 +42,24 @@ export const Flag = () => {
     if (state.Green === true){
       trueArray.push("Green")
     }
-    if (state.Pink === true){
-      trueArray.push("Pink")
-    }
     if (state.Orange === true){
       trueArray.push("Orange")
     }
     if (state.Blue === true){
       trueArray.push("Blue")
     }
+    colorCountryArr && trueArray && trueArray.map((e) => {
+      const result = colorCountryArr.filter(({color}) => color  === e)
+     
+      let unique = result.filter( (ele, ind) => 
+        ind === result.findIndex( elem => 
+        elem.name === ele.name && elem.name === ele.name))
 
-    colorCountryArr && trueArray && trueArray.map((e,i) => {
-      const result = colorCountryArr.filter(({color}) => color  === e)  
-      console.log(i, result)
-    })
-   
-  }
+      console.log(unique)
+  })
+}
+  
+  
 
   // runs upon load
   useEffect(() => {
@@ -115,7 +116,7 @@ export const Flag = () => {
         // 11-0
         }else if(r===b && b>g){
           color = '#ff00ff';
-          iro = 'Pink';
+          iro = 'Red';
         }else if(r>g && g>b){
           // 1-2 G:0 ~ 4.5
           if(g/r*16 > 0 && g/r*16 <= 4.5){
@@ -215,11 +216,11 @@ export const Flag = () => {
         }else{
             iro = 'invalid';
         }
+
        return iro
 }
 
 return (
-
     <div>
       {data.map((flag, i) => (
         <Palette
@@ -231,39 +232,33 @@ return (
           colorCount={4}
         >
           {({ data }) => {
+         
           data && data.map((x) => {
               colorCoding(x);
-              let colorCountry = ({name:flag.name, color:iro})
+              let colorCountry = ({name:flag.name, color:iro, src:flag.flag})
               colorCountryArr.push(colorCountry)
               return colorCountryArr
-            })
-          }}
-        
-        
-        </Palette>  
+            })}}
+        </Palette> 
       ))}
-        <div className={styles.container}>
-          <div className={styles.searchBox}>
-            <h4>Search by Colors</h4>
-            
-            <form onSubmit={submit}>
-              <FormGroup>
-                <ul className={styles.list}>
-                  {colorBtn}
-                </ul>
-              </FormGroup>
-              <Button variant="contained" color="primary" type="submit">
+      <div className={styles.container}>
+        <div className={styles.searchBox}>
+          <h4>Search by Colors</h4>
+          <form onSubmit={submit}>
+            <FormGroup>
+              <ul className={styles.list}>
+                {colorBtn}
+              </ul>
+            </FormGroup>
+            <div id="loading"></div>
+            <Button variant="contained" color="primary" type="submit">
                 Search
-              </Button>
-            </form>            
+            </Button>
+          </form>            
         </div>
-        <ul>
-      
-        </ul>
-      </div>
     </div>
-  );
-};
+  </div>
+  )};
 
 
 export default Flag;
