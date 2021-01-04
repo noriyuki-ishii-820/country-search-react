@@ -5,16 +5,15 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Modal from "@material-ui/core/Modal";
-import Fade from "@material-ui/core/Fade";
 import { Palette } from "color-thief-react";
 import styles from "./FlagSearch.module.css";
 import { makeStyles } from "@material-ui/core/styles";
-import { render } from "@testing-library/react";
 
 let iro = "";
 let trueArray = [];
 let colorCountryArr = [];
 let orgResult = [];
+let result = [];
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -46,12 +45,10 @@ export const Flag = () => {
     Green: false,
     Black: false,
     Cyan: false,
-    BlueGreen: false,
     YellowGreen: false,
-   
     Others: false,
   });
-  const colors = ["Red","Cyan", "Blue Green", "Yellow Green", "Yellow", "Green", "Blue", "Orange", "Others"];
+  const colors = ["Red","Cyan", "Yellow Green", "Yellow", "Green", "Blue", "Orange", "Others"];
 
   // close modal
   const handleClose = () => {
@@ -87,19 +84,18 @@ export const Flag = () => {
     }
     if (state.YellowGreen === true) {
       trueArray.push("Yellow Green");
-    }
-    if (state.BlueGreen === true) {
-      trueArray.push("Blue Green");
-    }
-    
+    }    
     if (state.Others === true) {
       trueArray.push("Others");
     }
+    
     colorCountryArr &&
       trueArray &&
       trueArray.map((e) => {
         const result = colorCountryArr.filter(({ color }) => color === e);
         
+        console.log(result)
+
         //remove duplicates
         return orgResult = result.filter(
           (ele, ind) =>
@@ -214,7 +210,7 @@ export const Flag = () => {
       // 6-1,6-2 B:4.6 ~ 12.5
       else if ((b / g) * 16 > 4.5 && (b / g) * 16 <= 12.5) {
         color = "#00ff7f";
-        iro = "Blue Green";
+        iro = "Green";
       }
       // 7-1 B:12.6 ~ 16
       else if ((b / g) * 16 > 12.5 && (b / g) * 16 <= 16) {
@@ -323,7 +319,7 @@ export const Flag = () => {
                 
                 
                   <div className={classes.paper}>
-                  <h2>Search Result</h2>
+                  <h2>Search Result:</h2>
                     <ul>
                       {orgResult && orgResult.map((e, i) => {
                       return <li key={i} className={styles.list}><img className={styles.flag} src={e.src}/> 
@@ -331,10 +327,11 @@ export const Flag = () => {
                       
                       })}
                     </ul>
+                    <p>-- end of the display --</p>
                   </div>
-             
             </Modal>
           </form>
+          
         </div>
       </div>
     </div>
