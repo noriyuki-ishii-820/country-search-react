@@ -28,6 +28,19 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Country() {
   const [country, setCountry] = useState([]);
+  const [search, setSearch] = useState([]);
+  const [allCountries, setAllCountries] = useState([]);
+  const allURL = "https://restcountries.eu/rest/v2/all";
+
+
+  useEffect(() => {
+    const getAll= async () => {
+      const response = await fetch(allURL)
+      const jsonData = await response.json();
+      setAllCountries(jsonData)
+  };
+      getAll()
+  })
 
   // modal
   const classes = useStyles();
@@ -68,9 +81,13 @@ export default function Country() {
 
     const queryURL = "https://restcountries.eu/rest/v2/name/" + input;
     getResults(queryURL);
-
-
   };
+
+  // store the search result
+  const handleChange = (e) => {
+    e.preventDefault()
+    setSearch(e.target.value);
+}
 
   // google maps
   const containerStyle = {
@@ -83,13 +100,22 @@ export default function Country() {
     <div className={styles.container}>
       <div className={styles.searchBox}>
         <form onSubmit={getSearch} className={styles.searchForm} >
-          <TextField
+          <input
             className={styles.searchTextField}
             id="outlined-search"
-            label="Type the name of a Country!"
+            placeholder="Type the name of a Country!"
             type="search"
             variant="outlined"
+            onChange={handleChange}
+            value={search}
+            list="country"
           />
+          <datalist id="country">
+            {allCountries.map((each, i) => (
+                <option value={each.name} key={i}></option>
+            ))}
+
+          </datalist>
           <Button variant="contained" color="primary" type="submit">
             Search
           </Button>

@@ -3,7 +3,6 @@ import { usePalette } from 'react-palette'
 
 const url = "https://restcountries.eu/rest/v2/all";
 
-
 export const fetchData = async() => {
 
     try {
