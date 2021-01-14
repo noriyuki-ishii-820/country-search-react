@@ -5,6 +5,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Modal from "@material-ui/core/Modal";
+import Grid from '@material-ui/core/Grid';
 import { Palette } from "color-thief-react";
 import styles from "./FlagSearch.module.css";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,21 +22,25 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    width:"60%",
+    margin:"auto",
+    height:"100%"
   },
   paper: {
-    width: 400,
+    width: "50%",
     margin: "auto",
     height: "auto",
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    flexGrow: 1,
   },
 }));
 
 export const Flag = () => {
-  const [data, setData] = useState([]);
   const classes = useStyles();
+  const [data, setData] = useState([]);
   const [open, setOpen] = React.useState(false);
   const [state, setState] = React.useState({
     Red: false,
@@ -93,9 +98,6 @@ export const Flag = () => {
       trueArray &&
       trueArray.map((e) => {
         const result = colorCountryArr.filter(({ color }) => color === e);
-        
-        console.log(result)
-
         //remove duplicates
         return orgResult = result.filter(
           (ele, ind) =>
@@ -315,18 +317,19 @@ export const Flag = () => {
                 onClose={handleClose}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
-              >
-                
-                
+              >  
                   <div className={classes.paper}>
                   <h2>Search Result:</h2>
-                    <ul>
-                      {orgResult && orgResult.map((e, i) => {
-                      return <li key={i} className={styles.list}><img className={styles.flag} src={e.src}/> 
-                      <p>{e.name}</p></li>
+                    <Grid container spacing={3}>
+                      {orgResult && orgResult.map((e, i) => {                      
+                      return     <Grid item xs={6} s={3} md={3} lg={3} key={i} xclassName={styles.list}>
+                                  <img className={styles.flag} src={e.src}/> 
+                                  <p>{e.name}</p>
+                                </Grid>
+                            
                       
                       })}
-                    </ul>
+                    </Grid>
                     <p>-- end of the display --</p>
                   </div>
             </Modal>

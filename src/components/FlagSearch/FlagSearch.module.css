@@ -24,6 +24,10 @@
     list-style: none;
 }
 
+.list p {
+  text-align:center;
+}
+
 .flag {
   width: 50%;
   height:auto;
